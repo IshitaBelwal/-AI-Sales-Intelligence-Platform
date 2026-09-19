@@ -1,0 +1,27 @@
+# Raw / local datasets
+*.zst
+data/raw/
+data/processed/
+
+# Local development datasets
+firmable_2M.jsonl
+firmable_sample.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+
+# Secrets
+*.key

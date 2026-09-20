@@ -1,0 +1,28 @@
+{
+  "evaluation_set": "account_relevance.jsonl",
+  "evaluation_size": 30,
+  "positive_accounts": 5,
+  "negative_accounts": 25,
+  "k": 10,
+  "baseline": {
+    "true_positive": 2,
+    "false_positive": 8,
+    "false_negative": 3,
+    "precision_at_10": 0.2,
+    "recall_at_10": 0.4,
+    "f1_at_10": 0.267
+  },
+  "icp_aware": {
+    "true_positive": 5,
+    "false_positive": 5,
+    "false_negative": 0,
+    "precision_at_10": 0.5,
+    "recall_at_10": 1.0,
+    "f1_at_10": 0.667
+  },
+  "notes": [
+    "Labels are hand-authored proxy relevance judgements.",
+    "Labels do not represent observed purchase intent or CRM outcomes.",
+    "The evaluation set is small and should be treated as directional."
+  ]
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "account": "oracle",
+    "prompt_version": "account_intelligence_v1",
+    "forbidden_claims": [
+      "attack surface"
+    ],
+    "forbidden_claim_count": 1,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "database",
+      "container"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 0.5
+  },
+  {
+    "account": "oracle",
+    "prompt_version": "account_intelligence_v2",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "database",
+      "container"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  },
+  {
+    "account": "h4y technologies",
+    "prompt_version": "account_intelligence_v1",
+    "forbidden_claims": [
+      "attack surface"
+    ],
+    "forbidden_claim_count": 1,
+    "matched_signals": [
+      "web",
+      "remote_access"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 0.5
+  },
+  {
+    "account": "h4y technologies",
+    "prompt_version": "account_intelligence_v2",
+    "forbidden_claims": [
+      "commonly targeted"
+    ],
+    "forbidden_claim_count": 1,
+    "matched_signals": [
+      "web",
+      "remote_access"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 0.5
+  },
+  {
+    "account": "madgenius com",
+    "prompt_version": "account_intelligence_v1",
+    "forbidden_claims": [
+      "attack surface"
+    ],
+    "forbidden_claim_count": 1,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "proxy"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 0.5
+  },
+  {
+    "account": "madgenius com",
+    "prompt_version": "account_intelligence_v2",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "proxy"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  },
+  {
+    "account": "v tal",
+    "prompt_version": "account_intelligence_v1",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "network"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  },
+  {
+    "account": "v tal",
+    "prompt_version": "account_intelligence_v2",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "network"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  },
+  {
+    "account": "peg tech",
+    "prompt_version": "account_intelligence_v1",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "network"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  },
+  {
+    "account": "peg tech",
+    "prompt_version": "account_intelligence_v2",
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
+    "matched_signals": [
+      "web",
+      "remote_access",
+      "network"
+    ],
+    "signal_coverage": 1.0,
+    "grounding_score": 1.0
+  }
+]

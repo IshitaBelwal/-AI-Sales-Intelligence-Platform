@@ -1,0 +1,30 @@
+{"account": "korea telecom", "label": 0, "reason": "ISP/infrastructure provider"}
+{"account": "139 162 0 0/16", "label": 0, "reason": "Network allocation style entity; insufficient direct-company evidence"}
+{"account": "chunghwa telecom", "label": 0, "reason": "ISP/infrastructure provider"}
+{"account": "internet utilities europe and asia", "label": 0, "reason": "Network/infrastructure organization"}
+{"account": "aliyun computing", "label": 0, "reason": "Cloud infrastructure provider"}
+{"account": "oracle", "label": 1, "reason": "Technology organization with substantial infrastructure and multiple technology surfaces"}
+{"account": "microsoft", "label": 0, "reason": "Cloud/platform infrastructure provider"}
+{"account": "google", "label": 0, "reason": "Cloud/platform/infrastructure provider"}
+{"account": "ucloud", "label": 0, "reason": "Cloud infrastructure provider"}
+{"account": "h4y technologies", "label": 1, "reason": "Unknown organization with meaningful multi-technology exposure"}
+{"account": "serverfreak technologies sdn bhd", "label": 0, "reason": "Hosting/infrastructure-oriented organization"}
+{"account": "vodafone ono s a", "label": 0, "reason": "ISP/telecom"}
+{"account": "madgenius com", "label": 1, "reason": "Unknown organization with multiple observed technology surfaces"}
+{"account": "friendhosting", "label": 0, "reason": "Hosting provider"}
+{"account": "hostdime com", "label": 0, "reason": "Hosting/infrastructure provider"}
+{"account": "site - soluc em inf telec e eng ltda - brsite", "label": 0, "reason": "Single observation; insufficient evidence"}
+{"account": "cloudnet cable and telecoms", "label": 0, "reason": "Telecom/ISP"}
+{"account": "reassign to intriplex ( thailand )", "label": 0, "reason": "Network allocation/reassignment entity"}
+{"account": "rural telecom sl", "label": 0, "reason": "Telecom/ISP"}
+{"account": "entplexit", "label": 0, "reason": "Single observation; insufficient evidence"}
+{"account": "palo alto networks", "label": 0, "reason": "Security vendor/provider"}
+{"account": "zscaler", "label": 0, "reason": "Security vendor/provider"}
+{"account": "fortinet", "label": 0, "reason": "Security vendor/provider"}
+{"account": "zscaler australia pty", "label": 0, "reason": "Security vendor/provider"}
+{"account": "zscaler softech india", "label": 0, "reason": "Security vendor/provider"}
+{"account": "v tal", "label": 1, "reason": "Unknown organization with broad technology exposure"}
+{"account": "scaleway", "label": 0, "reason": "Infrastructure/cloud-oriented provider"}
+{"account": "tt dotcom sdn bhd", "label": 0, "reason": "Telecom/network provider"}
+{"account": "huawei public cloud service (huawei software technologies ltd co)", "label": 0, "reason": "Public cloud infrastructure provider"}
+{"account": "peg tech", "label": 1, "reason": "Unknown organization with significant infrastructure and technology exposure"}

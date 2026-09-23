@@ -2,10 +2,8 @@
   {
     "account": "oracle",
     "prompt_version": "account_intelligence_v1",
-    "forbidden_claims": [
-      "attack surface"
-    ],
-    "forbidden_claim_count": 1,
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
     "matched_signals": [
       "web",
       "remote_access",
@@ -13,7 +11,7 @@
       "container"
     ],
     "signal_coverage": 1.0,
-    "grounding_score": 0.5
+    "grounding_score": 1.0
   },
   {
     "account": "oracle",
@@ -46,24 +44,23 @@
   {
     "account": "h4y technologies",
     "prompt_version": "account_intelligence_v2",
-    "forbidden_claims": [
-      "commonly targeted"
-    ],
-    "forbidden_claim_count": 1,
+    "forbidden_claims": [],
+    "forbidden_claim_count": 0,
     "matched_signals": [
       "web",
       "remote_access"
     ],
     "signal_coverage": 1.0,
-    "grounding_score": 0.5
+    "grounding_score": 1.0
   },
   {
     "account": "madgenius com",
     "prompt_version": "account_intelligence_v1",
     "forbidden_claims": [
-      "attack surface"
+      "attack surface",
+      "security posture"
     ],
-    "forbidden_claim_count": 1,
+    "forbidden_claim_count": 2,
     "matched_signals": [
       "web",
       "remote_access",
@@ -118,11 +115,10 @@
     "forbidden_claim_count": 0,
     "matched_signals": [
       "web",
-      "remote_access",
       "network"
     ],
-    "signal_coverage": 1.0,
-    "grounding_score": 1.0
+    "signal_coverage": 0.667,
+    "grounding_score": 0.833
   },
   {
     "account": "peg tech",

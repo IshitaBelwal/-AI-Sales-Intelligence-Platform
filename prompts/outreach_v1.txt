@@ -22,23 +22,37 @@ Rules:
    - security incidents
    - vulnerabilities
    - breaches
+   - compromise
    - buying intent
    - budget
    - security products currently in use
    - technologies not present in the evidence
+   - missing security controls
+   - security deficiencies
 
-3a. Do not describe the observed infrastructure as a
-    "broad surface", "attack surface", "risk", "exposure",
-    "security weakness", or similar risk characterization
-    unless the supplied evidence explicitly supports that claim.
+3. Describe observations literally.
 
-3b. Prefer neutral wording such as:
-    "The dataset shows..."
-    "The account has observed..."
-    "The environment includes..."
-    "The dataset contains observations of..."
+Prefer wording such as:
 
-4. Infrastructure scale is NOT evidence of buying intent.
+"The dataset shows..."
+"The account has observed..."
+"The environment includes..."
+"The dataset contains observations of..."
+
+4. Do NOT characterize observed infrastructure as:
+
+   - a broad surface
+   - an attack surface
+   - risk
+   - exposure
+   - a security weakness
+   - a security gap
+   - a security problem
+   - a significant presence
+   - evidence of insecurity
+   - evidence of targeting
+
+   unless the supplied evidence explicitly supports that exact claim.
 
 5. Do not claim the account has a security problem.
 
@@ -57,15 +71,28 @@ Rules:
     capability is explicitly present in the supplied evidence
     or account intelligence.
 
-11. General discussion topics are allowed, but phrase them as
-    exploratory topics rather than recommendations based on an
-    assumed weakness.
+11. General cybersecurity discussion topics are allowed, but
+    phrase them as exploratory topics rather than recommendations
+    based on an assumed weakness.
 
-12. No contact information is provided. Use a neutral placeholder
+12. Do not use phrases such as:
+
+    "strengthen your security posture"
+    "improve your security posture"
+    "close security gaps"
+    "address your vulnerabilities"
+    "protect your exposed infrastructure"
+
+    because these imply an unsupported deficiency.
+
+13. No contact information is provided. Use a neutral placeholder
     such as "[Name]" only when necessary.
 
-13. Keep the message concise and appropriate for a first
+14. Keep the message concise and appropriate for a first
     B2B outreach message.
+
+15. Every factual statement should be traceable to the supplied
+    evidence or intelligence.
 
 Return ONLY valid JSON with this structure:
 

@@ -35,7 +35,91 @@ st.set_page_config(
     page_icon="🛡️",
     layout="wide",
 )
+# ---------------------------------------------------------
+# Custom styling
+# ---------------------------------------------------------
 
+st.markdown(
+    """
+    <style>
+        /* Main page */
+        .block-container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            max-width: 1400px;
+        }
+
+        /* Header */
+        .cybersignal-eyebrow {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 0.35rem;
+        }
+
+        .cybersignal-title {
+            font-size: 2.4rem;
+            font-weight: 750;
+            line-height: 1.1;
+            margin-bottom: 0.45rem;
+        }
+
+        .cybersignal-subtitle {
+            font-size: 1.05rem;
+            color: #6b7280;
+            max-width: 850px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Metric cards */
+        div[data-testid="stMetric"] {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+        }
+
+        div[data-testid="stMetricLabel"] {
+            font-size: 0.82rem;
+            color: #6b7280;
+        }
+
+        div[data-testid="stMetricValue"] {
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+
+        /* Section headings */
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .section-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Discovery result count */
+        .result-count {
+            color: #6b7280;
+            font-size: 0.88rem;
+            margin: 0.7rem 0 0.4rem 0;
+        }
+
+        /* Buttons */
+        .stButton > button {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 # ---------------------------------------------------------
 # Load data
@@ -82,13 +166,23 @@ def get_signal_rows(account):
 # Application header
 # ---------------------------------------------------------
 
-st.title("🛡️ CyberSignal")
+st.markdown(
+    '<div class="cybersignal-eyebrow">SALES INTELLIGENCE PLATFORM</div>',
+    unsafe_allow_html=True,
+)
 
-st.subheader("AI-native cybersecurity sales intelligence")
+st.markdown(
+    '<div class="cybersignal-title">🛡️ CyberSignal</div>',
+    unsafe_allow_html=True,
+)
 
-st.write(
-    "Discover organizations, understand their observed technology "
-    "environment, and generate evidence-grounded sales intelligence."
+st.markdown(
+    '<div class="cybersignal-subtitle">'
+    'AI-native cybersecurity sales intelligence for discovering '
+    'accounts, understanding observed technology environments, '
+    'and generating evidence-grounded sales insights.'
+    '</div>',
+    unsafe_allow_html=True,
 )
 
 
@@ -102,20 +196,22 @@ with col1:
     st.metric(
         "Accounts",
         f"{len(accounts):,}",
+        help="Organizations represented in the application-ready dataset.",
     )
 
 with col2:
     st.metric(
         "Technology Signals",
         f"{int(accounts['exposure_signal_count'].sum()):,}",
+        help="Observed technology exposure signals across accounts.",
     )
 
 with col3:
     st.metric(
-        "Average ICP Score",
+        "Average ICP Fit",
         f"{accounts['icp_fit_score'].mean():.1f}",
+        help="Average deterministic ICP-fit heuristic score.",
     )
-
 
 # ---------------------------------------------------------
 # Account Discovery
@@ -123,7 +219,18 @@ with col3:
 
 st.divider()
 
-st.subheader("Account Discovery")
+st.markdown(
+    '<div class="section-title">Account Discovery</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="section-description">'
+    'Search and filter organizations using observed infrastructure signals '
+    'and the transparent ICP-fit heuristic.'
+    '</div>',
+    unsafe_allow_html=True,
+)
 
 search_col, type_col, score_col = st.columns([2, 1, 1])
 
@@ -197,11 +304,14 @@ filtered_accounts = filtered_accounts.sort_values(
 
 
 # ---------------------------------------------------------
-# Account selection
+# Account discovery results
 # ---------------------------------------------------------
 
-st.write(
-    f"Found **{len(filtered_accounts):,}** matching accounts"
+st.markdown(
+    f'<div class="result-count">'
+    f'Found <strong>{len(filtered_accounts):,}</strong> matching accounts'
+    f'</div>',
+    unsafe_allow_html=True,
 )
 
 if filtered_accounts.empty:
@@ -209,12 +319,66 @@ if filtered_accounts.empty:
     st.stop()
 
 
+# Show the highest-ranked accounts before selection
+display_accounts = filtered_accounts.head(10).copy()
+
+display_accounts["ICP Fit"] = display_accounts[
+    "icp_fit_score"
+].map(lambda x: f"{x:.0f}")
+
+display_accounts["IPs"] = display_accounts[
+    "unique_ips"
+].map(format_number)
+
+display_accounts["Products"] = display_accounts[
+    "unique_products"
+].map(format_number)
+
+display_accounts["Signals"] = display_accounts[
+    "exposure_signal_count"
+].map(format_number)
+
+display_accounts["Organization"] = display_accounts[
+    "normalized_organization"
+].str.title()
+
+st.dataframe(
+    display_accounts[
+        [
+            "Organization",
+            "organization_type",
+            "ICP Fit",
+            "IPs",
+            "Products",
+            "Signals",
+        ]
+    ].rename(
+        columns={
+            "organization_type": "Organization Type",
+        }
+    ),
+    use_container_width=True,
+    hide_index=True,
+)
+
+
+# ---------------------------------------------------------
+# Account selection
+# ---------------------------------------------------------
+
+st.markdown(
+    '<div class="section-description">'
+    'Select an account to view detailed intelligence and evidence.'
+    '</div>',
+    unsafe_allow_html=True,
+)
+
 account_options = filtered_accounts[
     "normalized_organization"
 ].tolist()
 
 selected_account_name = st.selectbox(
-    "Select an account",
+    "Account",
     account_options,
 )
 
@@ -226,16 +390,233 @@ selected_account = filtered_accounts[
 
 
 # ---------------------------------------------------------
-# AI Account Intelligence
+# Selected Account Header
 # ---------------------------------------------------------
 
 st.divider()
 
-st.subheader("AI Account Intelligence")
+account_display_name = selected_account[
+    "normalized_organization"
+].title()
 
-st.write(
-    "Generate evidence-grounded account intelligence using "
-    "the structured account signals."
+st.markdown(
+    f'<div class="section-title">{account_display_name}</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    f'<div class="section-description">'
+    f'{selected_account["organization_type"]} · '
+    f'Deterministic ICP-fit heuristic'
+    f'</div>',
+    unsafe_allow_html=True,
+)
+
+
+# ---------------------------------------------------------
+# Account Overview
+# ---------------------------------------------------------
+
+st.markdown(
+    '<div class="section-title">Account Overview</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="section-description">'
+    'A compact view of the observed infrastructure footprint '
+    'used by CyberSignal for account intelligence.'
+    '</div>',
+    unsafe_allow_html=True,
+)
+
+
+overview_col1, overview_col2, overview_col3, overview_col4 = st.columns(4)
+
+with overview_col1:
+    st.metric(
+        "ICP Fit",
+        f"{selected_account['icp_fit_score']:.0f}",
+        help="Deterministic heuristic score based on observed account characteristics.",
+    )
+
+with overview_col2:
+    st.metric(
+        "Unique IPs",
+        format_number(selected_account["unique_ips"]),
+    )
+
+with overview_col3:
+    st.metric(
+        "Products",
+        format_number(selected_account["unique_products"]),
+    )
+
+with overview_col4:
+    st.metric(
+        "Countries",
+        format_number(selected_account["countries_observed"]),
+    )
+
+
+# ---------------------------------------------------------
+# Additional Account Metrics
+# ---------------------------------------------------------
+
+info_col1, info_col2, info_col3 = st.columns(3)
+
+with info_col1:
+    st.caption("Organization Type")
+    st.write(selected_account["organization_type"])
+
+with info_col2:
+    st.caption("Observed Ports")
+    st.write(
+        format_number(
+            selected_account["unique_ports"]
+        )
+    )
+
+with info_col3:
+    st.caption("Total Observations")
+    st.write(
+        format_number(
+            selected_account["observation_count"]
+        )
+    )
+
+
+# ---------------------------------------------------------
+# Observed Technology Signals
+# ---------------------------------------------------------
+
+st.divider()
+
+st.markdown(
+    '<div class="section-title">Observed Technology Signals</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="section-description">'
+    'Technology categories derived from the observed infrastructure data. '
+    'These are observations, not claims of vulnerabilities or incidents.'
+    '</div>',
+    unsafe_allow_html=True,
+)
+
+signal_rows = get_signal_rows(selected_account)
+
+if signal_rows:
+
+    signal_col1, signal_col2 = st.columns(2)
+
+    midpoint = (len(signal_rows) + 1) // 2
+
+    with signal_col1:
+
+        for label, count in signal_rows[:midpoint]:
+
+            st.write(
+                f"**{label}**"
+            )
+
+            st.progress(
+                min(
+                    count
+                    / max(
+                        selected_account["unique_ips"],
+                        1,
+                    ),
+                    1.0,
+                )
+            )
+
+            st.caption(
+                f"{count:,} observed IPs"
+            )
+
+    with signal_col2:
+
+        for label, count in signal_rows[midpoint:]:
+
+            st.write(
+                f"**{label}**"
+            )
+
+            st.progress(
+                min(
+                    count
+                    / max(
+                        selected_account["unique_ips"],
+                        1,
+                    ),
+                    1.0,
+                )
+            )
+
+            st.caption(
+                f"{count:,} observed IPs"
+            )
+
+else:
+
+    st.info(
+        "No classified technology signals were observed."
+    )
+
+
+# ---------------------------------------------------------
+# Observation Window
+# ---------------------------------------------------------
+
+st.divider()
+
+st.markdown(
+    '<div class="section-title">Observation Window</div>',
+    unsafe_allow_html=True,
+)
+
+window_col1, window_col2 = st.columns(2)
+
+with window_col1:
+
+    st.caption("First Seen")
+
+    st.write(
+        str(
+            selected_account["first_seen"]
+        )
+    )
+
+with window_col2:
+
+    st.caption("Last Seen")
+
+    st.write(
+        str(
+            selected_account["last_seen"]
+        )
+    )
+
+
+# ---------------------------------------------------------
+# Account Evidence
+# ---------------------------------------------------------
+
+st.divider()
+
+st.markdown(
+    '<div class="section-title">Account Evidence</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="section-description">'
+    'Structured evidence passed to the AI layer. '
+    'This keeps generated analysis grounded in observed data.'
+    '</div>',
+    unsafe_allow_html=True,
 )
 
 
@@ -243,16 +624,38 @@ st.write(
 # Build account evidence
 # ---------------------------------------------------------
 
-account_evidence = build_account_evidence(selected_account)
+account_evidence = build_account_evidence(
+    selected_account
+)
+
+
+with st.expander(
+    "View structured account evidence"
+):
+
+    st.json(
+        account_evidence
+    )
 
 
 # ---------------------------------------------------------
-# Show account evidence
+# AI Account Intelligence
 # ---------------------------------------------------------
 
-with st.expander("View account evidence sent to AI"):
+st.divider()
 
-    st.json(account_evidence)
+st.markdown(
+    '<div class="section-title">AI Account Intelligence</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="section-description">'
+    'Generate evidence-grounded intelligence using the '
+    'structured account signals above.'
+    '</div>',
+    unsafe_allow_html=True,
+)
 
 
 # ---------------------------------------------------------
@@ -266,7 +669,9 @@ if st.button(
     key="generate_ai_analysis",
 ):
 
-    with st.spinner("Analyzing account evidence..."):
+    with st.spinner(
+        "Analyzing account evidence..."
+    ):
 
         try:
 
@@ -321,7 +726,8 @@ current_account = selected_account[
 ]
 
 has_current_intelligence = (
-    "account_intelligence" in st.session_state
+    "account_intelligence"
+    in st.session_state
     and st.session_state.get(
         "account_intelligence_account"
     ) == current_account
@@ -334,14 +740,18 @@ if has_current_intelligence:
         "account_intelligence"
     ]
 
-    intelligence = result["parsed"]
+    intelligence = result[
+        "parsed"
+    ]
 
 
     # -----------------------------------------------------
     # Summary
     # -----------------------------------------------------
 
-    st.markdown("### Summary")
+    st.markdown(
+        "### Summary"
+    )
 
     st.write(
         intelligence.get(
@@ -352,7 +762,7 @@ if has_current_intelligence:
 
 
     # -----------------------------------------------------
-    # Why relevant
+    # Why Relevant
     # -----------------------------------------------------
 
     st.markdown(
@@ -371,7 +781,9 @@ if has_current_intelligence:
     # Evidence
     # -----------------------------------------------------
 
-    st.markdown("### Evidence")
+    st.markdown(
+        "### Evidence"
+    )
 
     evidence_items = intelligence.get(
         "evidence",
@@ -397,7 +809,7 @@ if has_current_intelligence:
 
 
     # -----------------------------------------------------
-    # Security conversation
+    # Security Conversation
     # -----------------------------------------------------
 
     st.markdown(
@@ -413,7 +825,7 @@ if has_current_intelligence:
 
 
     # -----------------------------------------------------
-    # Recommended angle
+    # Recommended Angle
     # -----------------------------------------------------
 
     st.markdown(
@@ -437,16 +849,22 @@ if has_current_intelligence:
         "UNKNOWN",
     )
 
-    st.markdown("### Confidence")
+    st.markdown(
+        "### Confidence"
+    )
 
-    st.info(confidence)
+    st.info(
+        confidence
+    )
 
 
     # -----------------------------------------------------
     # LLM Metadata
     # -----------------------------------------------------
 
-    with st.expander("LLM Metadata"):
+    with st.expander(
+        "LLM Metadata"
+    ):
 
         st.json(
             result.get(
@@ -462,20 +880,26 @@ if has_current_intelligence:
 
     st.divider()
 
-    st.subheader("Generate Outreach")
+    st.markdown(
+        '<div class="section-title">Generate Outreach</div>',
+        unsafe_allow_html=True,
+    )
 
-    st.write(
-        "Generate a concise, evidence-grounded sales "
-        "message based on the account intelligence."
+    st.markdown(
+        '<div class="section-description">'
+        'Generate concise prospect outreach grounded in '
+        'the account evidence and AI analysis.'
+        '</div>',
+        unsafe_allow_html=True,
     )
 
 
     if st.button(
-    "Generate Outreach",
-    type="primary",
-    use_container_width=True,
-    key="generate_outreach",
-):
+        "Generate Outreach",
+        type="primary",
+        use_container_width=True,
+        key="generate_outreach",
+    ):
 
         with st.spinner(
             "Generating outreach..."
@@ -519,7 +943,8 @@ if has_current_intelligence:
     # -----------------------------------------------------
 
     has_current_outreach = (
-        "outreach_result" in st.session_state
+        "outreach_result"
+        in st.session_state
         and st.session_state.get(
             "outreach_account"
         ) == current_account
@@ -532,17 +957,23 @@ if has_current_intelligence:
             "outreach_result"
         ]
 
-        outreach = outreach_result["parsed"]
+        outreach = outreach_result[
+            "parsed"
+        ]
 
 
-        st.markdown("### Sales Outreach")
+        st.markdown(
+            "### Sales Outreach"
+        )
 
 
         # -------------------------------------------------
         # Subject
         # -------------------------------------------------
 
-        st.markdown("#### Subject")
+        st.markdown(
+            "#### Subject"
+        )
 
         st.code(
             outreach.get(
@@ -557,7 +988,9 @@ if has_current_intelligence:
         # Opening
         # -------------------------------------------------
 
-        st.markdown("#### Opening")
+        st.markdown(
+            "#### Opening"
+        )
 
         st.write(
             outreach.get(
@@ -571,7 +1004,9 @@ if has_current_intelligence:
         # Body
         # -------------------------------------------------
 
-        st.markdown("#### Body")
+        st.markdown(
+            "#### Body"
+        )
 
         st.write(
             outreach.get(
@@ -582,7 +1017,7 @@ if has_current_intelligence:
 
 
         # -------------------------------------------------
-        # Call to action
+        # Call to Action
         # -------------------------------------------------
 
         st.markdown(
@@ -598,7 +1033,7 @@ if has_current_intelligence:
 
 
         # -------------------------------------------------
-        # Evidence used
+        # Evidence Used
         # -------------------------------------------------
 
         st.markdown(
@@ -642,117 +1077,3 @@ if has_current_intelligence:
                     {},
                 )
             )
-
-# ---------------------------------------------------------
-# Account overview
-# ---------------------------------------------------------
-
-st.subheader("Account Overview")
-
-overview_col1, overview_col2, overview_col3, overview_col4 = st.columns(4)
-
-with overview_col1:
-    st.metric(
-        "ICP Fit Score",
-        f"{selected_account['icp_fit_score']:.1f}",
-    )
-
-with overview_col2:
-    st.metric(
-        "Unique IPs",
-        format_number(selected_account["unique_ips"]),
-    )
-
-with overview_col3:
-    st.metric(
-        "Unique Products",
-        format_number(selected_account["unique_products"]),
-    )
-
-with overview_col4:
-    st.metric(
-        "Countries",
-        format_number(selected_account["countries_observed"]),
-    )
-
-
-# ---------------------------------------------------------
-# Organization information
-# ---------------------------------------------------------
-
-info_col1, info_col2, info_col3 = st.columns(3)
-
-with info_col1:
-    st.write("**Organization Type**")
-    st.write(selected_account["organization_type"])
-
-with info_col2:
-    st.write("**Observed Ports**")
-    st.write(format_number(selected_account["unique_ports"]))
-
-with info_col3:
-    st.write("**Observations**")
-    st.write(format_number(selected_account["observation_count"]))
-
-
-# ---------------------------------------------------------
-# Technology Signals
-# ---------------------------------------------------------
-
-st.divider()
-
-st.subheader("Observed Technology Signals")
-
-signal_rows = get_signal_rows(selected_account)
-
-if signal_rows:
-
-    signal_col1, signal_col2 = st.columns(2)
-
-    midpoint = (len(signal_rows) + 1) // 2
-
-    with signal_col1:
-        for label, count in signal_rows[:midpoint]:
-            st.write(f"**{label}**")
-            st.progress(
-                min(count / max(
-                    selected_account["unique_ips"],
-                    1
-                ), 1.0)
-            )
-            st.caption(f"{count:,} observed IPs")
-
-    with signal_col2:
-        for label, count in signal_rows[midpoint:]:
-            st.write(f"**{label}**")
-            st.progress(
-                min(count / max(
-                    selected_account["unique_ips"],
-                    1
-                ), 1.0)
-            )
-            st.caption(f"{count:,} observed IPs")
-
-else:
-    st.info("No classified technology signals were observed.")
-
-
-# ---------------------------------------------------------
-# Observation Window
-# ---------------------------------------------------------
-
-st.divider()
-
-st.subheader("Observation Window")
-
-window_col1, window_col2 = st.columns(2)
-
-with window_col1:
-    st.write("**First Seen**")
-    st.write(str(selected_account["first_seen"]))
-
-with window_col2:
-    st.write("**Last Seen**")
-    st.write(str(selected_account["last_seen"]))
-
-

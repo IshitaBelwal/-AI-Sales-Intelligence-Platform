@@ -1,7 +1,8 @@
 # Raw / local datasets
 *.zst
 data/raw/
-data/processed/
+data/processed/*
+!data/processed/cybersignal_accounts.parquet
 data/llm_traces.jsonl
 
 # Local development datasets

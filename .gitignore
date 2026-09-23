@@ -2,6 +2,7 @@
 *.zst
 data/raw/
 data/processed/
+data/llm_traces.jsonl
 
 # Local development datasets
 firmable_2M.jsonl

@@ -151,9 +151,9 @@ The ingestion pipeline:
 6. Derives technology signals.
 7. Produces an application-ready account dataset.
 
-The development dataset contains approximately 2 million observations.
+During development, a 2 million-record subset was used for rapid iteration and evaluation.
 
-The final application dataset contains approximately 33,000 normalized organizations.
+The final full-data run processed 8,914,693 observations with 0 bad records and produced 89,728 normalized accounts for the application.
 
 ---
 

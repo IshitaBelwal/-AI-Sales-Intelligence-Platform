@@ -239,7 +239,7 @@ This ensures that the application uses the same scoring logic that was evaluated
 The generated application dataset contains:
 
 ```text
-33,022 accounts
+89,728 accounts
 40 columns
 ```
 
@@ -252,22 +252,31 @@ data/processed/cybersignal_accounts.parquet
 The dataset is approximately:
 
 ```text
-2.2 MB
+5.87 MB
 ```
 
 This is small enough for the Streamlit application to load efficiently.
 
-The application therefore does not need to reprocess the original 2M-record dataset every time the application starts.
+The application does not reprocess the raw observations at runtime.
+
+The final full-data pipeline processed 8,914,693 observations offline and produced 89,728 account-level records for the application.
+
 
 Instead:
 
 ```text
-2M observations
-      ↓
-Preprocessed offline
-      ↓
+8,914,693 observations
+          ↓
+Streaming normalization
+          ↓
+Organization-level aggregation
+          ↓
+Technology signals + ICP scoring
+          ↓
+89,728 accounts
+          ↓
 cybersignal_accounts.parquet
-      ↓
+          ↓
 Streamlit application
 ```
 
@@ -1318,17 +1327,21 @@ data/llm_traces.jsonl
 
 ### 38.1 Precompute account intelligence
 
-The application does not process the 2M raw observations at runtime.
+The application does not process the raw 8.9M observations at runtime.
 
 Instead, the heavy processing happens offline.
 
 ```text
-Raw Data
-   ↓
-Processing
-   ↓
+Full Source Dataset
+       ↓
+Streaming Ingestion
+       ↓
+Account Aggregation
+       ↓
+Technology Signals + ICP Scoring
+       ↓
 Application Dataset
-   ↓
+       ↓
 Streamlit
 ```
 
